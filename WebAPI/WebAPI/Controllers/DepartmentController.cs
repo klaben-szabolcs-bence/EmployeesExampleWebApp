@@ -18,6 +18,10 @@ namespace WebAPI.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// List all departments
+        /// </summary>
+        /// <returns>API result</returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -46,6 +50,11 @@ namespace WebAPI.Controllers
             return new JsonResult(table);
         }
 
+        /// <summary>
+        /// Add new department
+        /// </summary>
+        /// <param name="department">Department to add</param>
+        /// <returns>API result</returns>
         [HttpPost]
         public IActionResult Post(Department department)
         {
@@ -71,6 +80,11 @@ namespace WebAPI.Controllers
             return new JsonResult(new { Message = "Department created successfully" }) { StatusCode = 201 };
         }
 
+        /// <summary>
+        /// Update department
+        /// </summary>
+        /// <param name="department">Department to update</param>
+        /// <returns>API result</returns>
         [HttpPut]
         public IActionResult Put(Department department)
         {
@@ -97,6 +111,11 @@ namespace WebAPI.Controllers
             return new JsonResult(new { Message = "Department updated successfully" }) { StatusCode = 200 };
         }
 
+        /// <summary>
+        /// Delete department
+        /// </summary>
+        /// <param name="id">Department to delete</param>
+        /// <returns>API result</returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
