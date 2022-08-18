@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -122,6 +123,21 @@ namespace WebAPI.Controllers
             connection.Close();
             
             return new JsonResult(new { Message = "Employee deleted successfully" })
+            { StatusCode = StatusCodes.Status200OK };
+        }
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            var file = Request.Form.Files[0];
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName?.Trim('"');
+            if (fileName == null)
+                return new JsonResult(new { Message = "File name is null" }) { StatusCode = StatusCodes.Status400BadRequest };
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Photos", fileName);
+            using var stream = new FileStream(path, FileMode.Create);
+            file.CopyTo(stream);
+            return new JsonResult(new { Message = "File uploaded successfully" })
             { StatusCode = StatusCodes.Status200OK };
         }
     }
