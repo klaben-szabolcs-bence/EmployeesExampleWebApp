@@ -11,6 +11,10 @@ import { ShowEmployeeComponent } from './employee/show/show.component';
 import { AddEditEmployeeComponent } from './employee/add-edit/add-edit.component';
 import { WebAPIService } from './web-api.service';
 
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,10 @@ import { WebAPIService } from './web-api.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [WebAPIService],
   bootstrap: [AppComponent]
