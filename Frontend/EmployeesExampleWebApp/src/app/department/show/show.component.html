@@ -1,3 +1,25 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{ModalTitle}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="onClose(modal)"></button>
+    </div>
+    <div class="modal-body">
+        <app-add-edit-department [ShowDepComp]="this" *ngIf="ActivateAddEditDepartmentComponent" [modal]="modal">
+        </app-add-edit-department>
+    </div>
+</ng-template>
+
+<button type="button" class="btn my-2 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    data-backdrop="static" data-keyboard="false" (click)="onAdd(content)">
+    <i class="bi bi-plus-circle-fill"></i>
+</button>
+
+<div class="m-2">
+    <ngb-alert #selfClosingAlert *ngIf="successMessage" type="success" (closed)="successMessage = ''">{{ successMessage
+        }}
+    </ngb-alert>
+</div>
+
 <table class="table table-striped table-responsive">
     <thead>
         <tr>
@@ -12,8 +34,11 @@
             <td>{{department.DepartmentName}}</td>
             <td>
                 <span class="btn-group" role="group">
-                    <button class="btn mr-1 btn-primary" (click)="onEdit(department)">Edit</button>
-                    <button class="btn mr-1 btn-danger" (click)="onDelete(department)">Delete</button>
+                    <button class="btn mr-1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-backdrop="static" data-keyboard="false" (click)="onEdit(department, content)"><i
+                            class="bi bi-pencil-square"></i></button>
+                    <button class="btn mr-1 btn-danger" (click)="onDelete(department)"><i
+                            class="bi bi-trash-fill"></i></button>
                 </span>
             </td>
         </tr>
