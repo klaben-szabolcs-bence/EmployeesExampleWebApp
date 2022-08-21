@@ -1,1 +1,52 @@
-<p>show works!</p>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{ModalTitle}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="onClose(modal)"></button>
+    </div>
+    <div class="modal-body">
+        <app-add-edit-employee [ShowEmpComp]="this" *ngIf="ActivateAddEditEmployeeComponent" [modal]="modal">
+        </app-add-edit-employee>
+    </div>
+</ng-template>
+
+<button type="button" class="btn my-2 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    data-backdrop="static" data-keyboard="false" (click)="onAdd(content)">
+    <i class="bi bi-plus-circle-fill"></i>
+</button>
+
+<div class="m-2">
+    <ngb-alert #selfClosingAlert *ngIf="successMessage" type="success" (closed)="successMessage = ''">{{ successMessage
+        }}
+    </ngb-alert>
+</div>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>EmployeeID</th>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Date of Joining</th>
+            <th>Photo</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of employeeList">
+            <td>{{employee.EmployeeId}}</td>
+            <td>{{employee.EmployeeName}}</td>
+            <td>{{employee.Department}}</td>
+            <td>{{employee.DateOfJoining}}</td>
+            <td><img src="{{service.photoURL + employee.PhotoFileName}}" alt="{{employee.EmployeeName}}" class="img-thumbnail"
+                    width="100" height="100"></td>
+            <td>
+                <span class="btn-group" role="group">
+                    <button class="btn mr-1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-backdrop="static" data-keyboard="false" (click)="onEdit(employee, content)"><i
+                            class="bi bi-pencil-square"></i></button>
+                    <button class="btn mr-1 btn-danger" (click)="onDelete(employee)"><i
+                            class="bi bi-trash-fill"></i></button>
+                </span>
+            </td>
+        </tr>
+</table>
