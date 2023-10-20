@@ -12,7 +12,7 @@ export class WebAPIService {
 
   readonly port = 5000;
   readonly rootURL = `http://localhost:${this.port}/api`;
-  readonly photoURL = `http://localhost:${this.port}/Photos`;
+  readonly photoURL = `http://localhost:${this.port}/Photos/`;
 
   constructor(private http: HttpClient) { }
 
@@ -53,15 +53,17 @@ export class WebAPIService {
     return this.http.delete<Message>(this.rootURL + '/Employee/' + id);
   }
 
-  saveFile(file: File): Observable<Object> {
+  saveFile(file: File): Observable<Message> {
     const formData: FormData = new FormData();
     formData.append('PhotoFile', file);
-    return this.http.post(this.photoURL, formData);
+    return this.http.post<Message>(this.rootURL + '/Employee/SaveFile', formData);
   }
 
   getAllDepartmentNames(): Observable<string[]> {
-    return this.http.get<any[]>(this.rootURL + '/Department/GetAllDepartmentNames').pipe(
-      map(x => x.map(y => y.DepartmentName)));
+    return this.http.get<any[]>(this.rootURL + '/Employee/GetAllDepartmentNames').pipe(
+      map(result => {
+        return result.map(x => x.DepartmentName);
+      }));
   }
   //#endregion
 }
