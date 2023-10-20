@@ -1,3 +1,12 @@
-<h1>EEWA</h1>
-<hr>
-<router-outlet></router-outlet>
+<div class="container">
+  <h3 class="d-flex justify-content-center text-primary">{{title}}</h3>
+  <h5 class="d-flex justify-content-center text-secondary">{{subtitle}}</h5>
+  <h6 class="d-flex justify-content-center text-secondary">{{subsubtitle}}</h6>
+  <nav class="nav nav-pills">
+    <a class="nav-link" routerLink="/department"
+      [ngClass]="{'active': this.router.url.includes('department')}">Department</a>
+    <a class="nav-link" routerLink="/employee"
+      [ngClass]="{'active': this.router.url.includes('employee')}">Employees</a>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
