@@ -40,8 +40,8 @@ namespace WebAPI.Controllers
             table.Load(reader);
             reader.Close();
             connection.Close();
-            
-            return new JsonResult(table);
+
+            return new JsonResult(table) { StatusCode = StatusCodes.Status200OK };
         }
 
         /// <summary>
@@ -139,6 +139,26 @@ namespace WebAPI.Controllers
             file.CopyTo(stream);
             return new JsonResult(new { Message = "File uploaded successfully" })
             { StatusCode = StatusCodes.Status200OK };
+        }
+
+        [Route("GetAllDepartmentNames")]
+        [HttpGet]
+        public JsonResult GetAllDepartmentNames()
+        {
+            var connectionString = _config.GetConnectionString("DefaultConnection");
+            using var connection = new SqlConnection(connectionString);
+            using var command = new SqlCommand();
+
+            command.Connection = connection;
+            command.CommandText = "SELECT DepartmentName FROM dbo.Department";
+            connection.Open();
+            var reader = command.ExecuteReader();
+            var table = new DataTable();
+            table.Load(reader);
+            reader.Close();
+            connection.Close();
+
+            return new JsonResult(table) { StatusCode = StatusCodes.Status200OK };
         }
     }
 }
