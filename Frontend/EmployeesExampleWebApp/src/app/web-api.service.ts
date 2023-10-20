@@ -3,14 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Department } from './models/department';
 import { Employee } from './models/employee';
+import { Message } from './models/message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebAPIService {
 
-  readonly rootURL = 'http://localhost:5221/api';
-  readonly photoURL = 'http://localhost:5221/Photos';
+  readonly port = 5000;
+  readonly rootURL = `http://localhost:${this.port}/api`;
+  readonly photoURL = `http://localhost:${this.port}/Photos`;
 
   constructor(private http: HttpClient) { }
 
@@ -20,16 +22,16 @@ export class WebAPIService {
     return this.http.get<Department[]>(this.rootURL + '/Department');
   }
 
-  addDepartment(department: Department) {
-    return this.http.post(this.rootURL + '/Department', department);
+  addDepartment(department: Department): Observable<Message> {
+    return this.http.post<Message>(this.rootURL + '/Department', department);
   }
 
-  updateDepartment(department: Department) {
-    return this.http.put(this.rootURL + '/Department', department);
+  updateDepartment(department: Department): Observable<Message> {
+    return this.http.put<Message>(this.rootURL + '/Department', department);
   }
 
-  deleteDepartment(id: number) {
-    return this.http.delete(this.rootURL + '/Department/' + id);
+  deleteDepartment(id: number): Observable<Message> {
+    return this.http.delete<Message>(this.rootURL + '/Department/' + id);
   }
   //#endregion
 
@@ -39,16 +41,16 @@ export class WebAPIService {
     return this.http.get<Employee[]>(this.rootURL + '/Employee');
   }
 
-  addEmployee(employee: Employee) {
-    return this.http.post(this.rootURL + '/Employee', employee);
+  addEmployee(employee: Employee): Observable<Message> {
+    return this.http.post<Message>(this.rootURL + '/Employee', employee);
   }
 
-  updateEmployee(employee: Employee) {
-    return this.http.put(this.rootURL + '/Employee', employee);
+  updateEmployee(employee: Employee): Observable<Message> {
+    return this.http.put<Message>(this.rootURL + '/Employee', employee);
   }
 
-  deleteEmployee(id: number) {
-    return this.http.delete(this.rootURL + '/Employee/' + id);
+  deleteEmployee(id: number): Observable<Message> {
+    return this.http.delete<Message>(this.rootURL + '/Employee/' + id);
   }
 
   saveFile(file: File): Observable<Object> {
